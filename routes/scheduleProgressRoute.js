@@ -1,8 +1,10 @@
 import express from 'express';
-import { getScheduleProgressesByUser } from '../controllers/scheduleProgressController.js';
+import { getProgressByDate, getScheduleProgressesByUser } from '../controllers/scheduleProgressController.js';
 
 const scheduleProgressRouter = express.Router();
 
-scheduleProgressRouter.get('/:userEmail',getScheduleProgressesByUser)
+scheduleProgressRouter.get('/:userEmail',getScheduleProgressesByUser);
+
+scheduleProgressRouter.get('/all-types/:userEmail', getProgressByDate);
 
 export default scheduleProgressRouter;
