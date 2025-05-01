@@ -6,7 +6,9 @@ const UserSchema =new mongoose.Schema({
     email:{
         type:String,
         required:true,
-        unique:true
+        unique:true,
+        lowercase: true,
+        trim: true
     },
     password:{
         type:String,
@@ -20,15 +22,18 @@ const UserSchema =new mongoose.Schema({
     role:{
         type:String,
         required:true,
-        default:"customer"
+        enum: ['user', 'admin'],
+        default: 'user'
     },
     firstname:{
         type:String,
-        required:true
+        required:true,
+        trim: true
     },
     lastname:{
         type:String,
-        required:true
+        required:true,
+        trim: true
     },
     address:{
         type:String,
@@ -36,12 +41,13 @@ const UserSchema =new mongoose.Schema({
     },
     phone:{
         type:String,
-        required:true
+        required:true,
+        trim: true
     },
     profilePicture:{
         type:String,
         required:true,
-        default:"https://w7.pngwing.com/pngs/205/731/png-transparent-default-avatar-thumbnail.png"
+        default:"https://www.pngall.com/wp-content/uploads/5/Profile-PNG-File.png"
     },
     emailVerified:{
         type:Boolean,
@@ -49,6 +55,8 @@ const UserSchema =new mongoose.Schema({
         default:false
     }
 
+},{
+    timestamps: true 
 });
 
 

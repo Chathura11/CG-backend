@@ -5,6 +5,9 @@ import userRouter from './routes/userRoute.js';
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
 import cors from 'cors'
+import scheduleRouter from './routes/scheduleRoute.js';
+import expenseRouter from './routes/expenseRoute.js';
+import scheduleProgressRouter from './routes/scheduleProgressRoute.js';
 
 
 
@@ -45,6 +48,9 @@ connection.once("open",()=>{
 
 
 app.use('/api/users',userRouter);
+app.use('/api/schedules',scheduleRouter);
+app.use('/api/expenses',expenseRouter);
+app.use('/api/scheduleprogresses',scheduleProgressRouter);
 
 app.listen(3000,()=>{
     console.log("Server is running on port 3000");

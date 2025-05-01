@@ -127,16 +127,16 @@ export function isItAdmin(req){
     return isAdmin;
 }
 
-export function isItCustomer(req){
-    let isCustomer = false;
+export function isItUser(req){
+    let isUser = false;
 
     if(req.user !=null){
-        if(req.user.role == "customer"){
-            isCustomer = true;
+        if(req.user.role == "user"){
+            isUser = true;
         }
     }
 
-    return isCustomer;
+    return isUser;
 }
 
 export async function GetAllUsers(req,res){
