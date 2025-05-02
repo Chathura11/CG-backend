@@ -1,5 +1,5 @@
 import express from 'express'
-import { addExpenseAndUpdateProgress, deleteExpenseAndUpdateProgress, editExpenseAndRecalculateProgress, getExpensesByUser } from '../controllers/expenseController.js';
+import { addExpenseAndUpdateProgress, deleteExpenseAndUpdateProgress, editExpenseAndRecalculateProgress, getExpensesByMonthAndYear, getExpensesByUser, getMonthlyExpensesByUser } from '../controllers/expenseController.js';
 
 const expenseRouter = express.Router();
 
@@ -9,6 +9,10 @@ expenseRouter.put('/:id', editExpenseAndRecalculateProgress);
 
 expenseRouter.delete('/:id', deleteExpenseAndUpdateProgress);
 
-expenseRouter.get('/:userEmail',getExpensesByUser);
+expenseRouter.get('/',getExpensesByUser);
+
+expenseRouter.get('/monthly', getMonthlyExpensesByUser);
+
+expenseRouter.get('/by-month', getExpensesByMonthAndYear);
 
 export default expenseRouter;
