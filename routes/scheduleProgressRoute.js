@@ -3,8 +3,8 @@ import { getProgressByDate, getScheduleProgressesByUser } from '../controllers/s
 
 const scheduleProgressRouter = express.Router();
 
-scheduleProgressRouter.get('/:userEmail',getScheduleProgressesByUser);
+scheduleProgressRouter.get('/',getScheduleProgressesByUser);
 
-scheduleProgressRouter.get('/all-types/:userEmail', getProgressByDate);
+scheduleProgressRouter.get('/all-types', getProgressByDate);
 
 export default scheduleProgressRouter;

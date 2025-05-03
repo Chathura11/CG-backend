@@ -6,7 +6,7 @@ export async function getScheduleProgressesByUser(req,res){
         if(req.user == null){
             return res.status(403).json({message:"Unauthorized!"});
         }
-        const { userEmail } = req.params;
+        const  userEmail  = req.user.email;
 
         const scheduleProgresses = await ScheduleProgress.find({ userEmail });
         res.status(200).json(scheduleProgresses);
@@ -22,7 +22,7 @@ export async function getProgressByDate(req, res){
             return res.status(403).json({message:"Unauthorized!"});
         }
 
-        const { userEmail } = req.params;
+        const  userEmail  = req.user.email;
         const { date, type } = req.body;
   
         const inputDate = new Date(date);

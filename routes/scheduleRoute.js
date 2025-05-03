@@ -5,7 +5,7 @@ const scheduleRouter = express.Router();
 
 scheduleRouter.post('/', createSchedule);
 
-scheduleRouter.get('/:userEmail', getSchedulesByUser);
+scheduleRouter.get('/', getSchedulesByUser);
 
 scheduleRouter.put('/:id', updateSchedule);
 

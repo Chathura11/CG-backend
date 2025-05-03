@@ -32,7 +32,7 @@ export async function getSchedulesByUser(req, res){
             return res.status(403).json({message:"Unauthorized!"});
         }
 
-        const { userEmail } = req.params;
+        const userEmail  = req.user.email;
         const schedules = await Schedule.find({ userEmail });
         res.status(200).json(schedules);
     } catch (err) {
