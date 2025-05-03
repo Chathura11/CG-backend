@@ -1,9 +1,11 @@
 import express from 'express';
-import { getProgressByDate, getScheduleProgressesByUser } from '../controllers/scheduleProgressController.js';
+import { getCurrentScheduleProgress, getProgressByDate, getScheduleProgressesByUser } from '../controllers/scheduleProgressController.js';
 
 const scheduleProgressRouter = express.Router();
 
 scheduleProgressRouter.get('/',getScheduleProgressesByUser);
+
+scheduleProgressRouter.get('/current',getCurrentScheduleProgress);
 
 scheduleProgressRouter.get('/all-types', getProgressByDate);
 
