@@ -53,23 +53,19 @@ function matchDateFilter(type, dateObj) {
   }
 }
 
-async function recalculateScheduleProgress(userEmail, type, date){
+export default async function recalculateScheduleProgress(userEmail, type, date) {
   const d = new Date(date);
   const day = d.getDate();
   const month = d.getMonth() + 1;
   const year = d.getFullYear();
   const week = Math.ceil((day + new Date(year, month - 1, 1).getDay()) / 7);
 
-  // Get the active schedule of that type
   const schedule = await Schedule.findOne({ userEmail, type, isEnabled: true });
-  if (!schedule) return; // No schedule = nothing to do
+  if (!schedule) return;
 
   const dateFilter = matchDateFilter(type, { day, week, month, year });
-
-  // Get expenses for the user and period
   const expenses = await Expense.find({ userEmail, ...dateFilter });
 
-  // Calculate totals
   let totalSpent = 0;
   const categorySpent = {};
 
@@ -78,24 +74,35 @@ async function recalculateScheduleProgress(userEmail, type, date){
     categorySpent[exp.category] = (categorySpent[exp.category] || 0) + exp.amount;
   });
 
-  // Update or create progress
-  const existing = await ScheduleProgress.findOneAndUpdate(
-    { userEmail, type, day, month, year },
-    {
-      userEmail,
-      type,
-      targetAmount: schedule.targetAmount,
-      categories: schedule.categories,
-      totalSpent,
-      categorySpent,
-      day,
-      month,
-      year
-    },
-    { upsert: true, new: true }
-  );
+  const query = { userEmail, type, year };
+  if (type === "daily") {
+    query.day = day;
+    query.month = month;
+  } else if (type === "weekly") {
+    query.week = week;
+    query.month = month;
+  } else if (type === "monthly") {
+    query.month = month;
+  }
+
+  const update = {
+    userEmail,
+    type,
+    targetAmount: schedule.targetAmount,
+    categories: schedule.categories,
+    totalSpent,
+    categorySpent,
+    ...(type === "daily" && { day, month }),
+    ...(type === "weekly" && { week, month }),
+    ...(type === "monthly" && { month }),
+    year
+  };
+
+  const existing = await ScheduleProgress.findOneAndUpdate(query, update, {
+    upsert: true,
+    new: true
+  });
 
   return existing;
-};
+}
 
-export default recalculateScheduleProgress;
