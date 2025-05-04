@@ -13,6 +13,6 @@ expenseRouter.get('/',getExpensesByUser);
 
 expenseRouter.get('/monthly', getMonthlyExpensesByUser);
 
-expenseRouter.get('/by-month', getExpensesByMonthAndYear);
+expenseRouter.post('/by-month', getExpensesByMonthAndYear);
 
 export default expenseRouter;
