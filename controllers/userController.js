@@ -55,7 +55,7 @@ export function loginUser(req,res){
                     profilePicture:user.profilePicture,
                     phone:user.phone,
                     emailVerified:user.emailVerified
-                },process.env.JWT_SECRET_KEY)
+                },process.env.JWT_SECRET_KEY,{ expiresIn: 60 * 60 * 24 * 7 })
 
                 res.status(200).json({message:"login successful!",token:token,user:user})
             }else{
@@ -216,6 +216,11 @@ export async function LoginWithGoogle(req,res){
             }
         })
         const user = await User.findOne({email:response.data.email})
+
+        if(user.isBlocked){
+            res.status(403).json({message:"Your account is blocked.Please contact the admin!"})
+            return;
+        }
 
         if(user !=null){
             const token = jwt.sign({
