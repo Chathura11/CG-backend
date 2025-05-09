@@ -217,12 +217,12 @@ export async function LoginWithGoogle(req,res){
         })
         const user = await User.findOne({email:response.data.email})
 
-        if(user.isBlocked){
-            res.status(403).json({message:"Your account is blocked.Please contact the admin!"})
-            return;
-        }
-
         if(user !=null){
+            if(user.isBlocked){
+                res.status(403).json({message:"Your account is blocked.Please contact the admin!"})
+                return;
+            }
+            
             const token = jwt.sign({
                 firstname : user.firstname,
                 lastname : user.lastname,
