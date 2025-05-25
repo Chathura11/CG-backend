@@ -8,6 +8,7 @@ import cors from 'cors'
 import scheduleRouter from './routes/scheduleRoute.js';
 import expenseRouter from './routes/expenseRoute.js';
 import scheduleProgressRouter from './routes/scheduleProgressRoute.js';
+import aiRouter from './routes/ai.js';
 
 
 
@@ -51,6 +52,7 @@ app.use('/api/users',userRouter);
 app.use('/api/schedules',scheduleRouter);
 app.use('/api/expenses',expenseRouter);
 app.use('/api/scheduleprogresses',scheduleProgressRouter);
+app.use('/api/ai',aiRouter);
 
 app.listen(3000,()=>{
     console.log("Server is running on port 3000");
