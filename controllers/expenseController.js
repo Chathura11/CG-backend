@@ -11,7 +11,7 @@ export async function addExpenseAndUpdateProgress(req,res){
             return res.status(403).json({message:"Unauthorized!"});
         }
 
-        const {  category, amount,date, receiptImageUrl } = req.body;
+        const {  category, amount,date,description, receiptImageUrl } = req.body;
         const userEmail = req.user.email;
         const expenseDate = new Date(date || Date.now());
         const day = expenseDate.getDate();
@@ -24,6 +24,7 @@ export async function addExpenseAndUpdateProgress(req,res){
             category,
             amount,
             date:expenseDate,
+            description,
             receiptImageUrl
         })
 
